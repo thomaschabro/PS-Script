@@ -33,7 +33,7 @@ LETTER = ( "a" | "..." | "z" | "A" | "..." | "Z" );
 DIGIT = ( "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "0" );
 COMPARATOR = ( "<" | ">" | "<=" | ">=" | "==" | "!=" );
 ```
-## Exemplo de Linguagem
+## Código de exemplo
 ```
 setup track_size is 500
 setup n_laps is 20
