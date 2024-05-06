@@ -18,9 +18,9 @@ MINUS = "minus", EXPRESSION;
 
 DISPLAY = "display", "(", ( STRING | EXPRESSION ), {"concat", ( STRING | EXPRESSION ) }, ")";
 
-DURING_RACE = "during_race", "(", ( NUMBER | IDENTIFIER), COMPARATOR, ( NUMBER | IDENTIFIER ), ")", "\n", { STATEMENT }, "end_race";
+DURING_RACE = "during_race", "(", EXPRESSION, COMPARATOR, EXPRESSION, ")", "\n", { STATEMENT }, "end_race";
 
-VERIFY = "verify", "(", ( NUMBER | IDENTIFIER), COMPARATOR, ( NUMBER | IDENTIFIER ), ")", "then", ":", "\n", { STATEMENT }, "end_vef", [OTHER];
+VERIFY = "verify", "(", EXPRESSION, COMPARATOR, EXPRESSION, ")", "then", ":", "\n", { STATEMENT }, "end_vef", [OTHER];
 
 OTHER = "other", ":", "\n", { STATEMENT }, "end_other";
 
