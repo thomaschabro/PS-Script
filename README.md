@@ -26,7 +26,7 @@ OTHER = "other", ":", "\n", { STATEMENT }, "end_other";
 
 EXPRESSION = TERM, { ("+" | "-"), TERM };
 TERM = FACTOR, { ("*" | "/"), FACTOR };
-FACTOR = (("+" | "-"), FACTOR) | NUMBER | "(", EXPRESSION, ")" | IDENTIFIER | FACTOR;
+FACTOR = (("+" | "-"), FACTOR) | NUMBER | "(", EXPRESSION, ")" | IDENTIFIER;
 IDENTIFIER = LETTER, { LETTER | DIGIT | "_" };
 NUMBER = DIGIT, { DIGIT };
 LETTER = ( "a" | "..." | "z" | "A" | "..." | "Z" );
