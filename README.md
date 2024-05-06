@@ -4,7 +4,7 @@ PSS (Pit Stop Script) é uma linguagem de programação voltada para o meio auto
 ## EBNF 
 ```
 BLOCK = { STATEMENT };
-STATEMENT = ( DECLARATION | ASSIGNMENT | DISPLAY | DURING_RACE | VERIFY ), "\n";
+STATEMENT = ( "λ" | DECLARATION | ASSIGNMENT | DISPLAY | DURING_RACE | VERIFY ), "\n";
 
 DECLARATION = "setup", IDENTIFIER, [SET];
 ASSIGNMENT = IDENTIFIER, ( SET | INCREMENT | PLUS | MINUS ) ;
@@ -16,7 +16,7 @@ INCREMENT = "next";
 PLUS = "plus", EXPRESSION;
 MINUS = "minus", EXPRESSION;
 
-DISPLAY = "display", "(", EXPRESSION, {"concat", EXPRESSION}, ")";
+DISPLAY = "display", "(", ( STRING | EXPRESSION ), {"concat", ( STRING | EXPRESSION ) }, ")";
 
 DURING_RACE = "during_race", "(", ( NUMBER | IDENTIFIER), COMPARATOR, ( NUMBER | IDENTIFIER ), ")", "\n", { STATEMENT }, "end_race";
 
@@ -32,6 +32,7 @@ NUMBER = DIGIT, { DIGIT };
 LETTER = ( "a" | "..." | "z" | "A" | "..." | "Z" );
 DIGIT = ( "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "0" );
 COMPARATOR = ( "<" | ">" | "<=" | ">=" | "==" | "!=" );
+STRING = '"' { "λ" | LETTER | DIGIT } '"'
 ```
 ## Código de exemplo
 ```
