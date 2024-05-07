@@ -3,7 +3,7 @@ PSS (Pit Stop Script) é uma linguagem de programação voltada para o meio auto
 
 ## EBNF 
 ```
-BLOCK = { STATEMENT };
+BLOCK = "track_day", { STATEMENT }, "end_trackday";
 STATEMENT = ( "λ" | DECLARATION | ASSIGNMENT | DISPLAY | DURING_RACE | VERIFY ), "\n";
 
 DECLARATION = "setup", IDENTIFIER, [SET];
@@ -36,6 +36,8 @@ STRING = '"' { "λ" | LETTER | DIGIT } '"'
 ```
 ## Código de exemplo
 ```
+track_day
+
 setup track_size is 500
 setup n_laps is 20
 
@@ -64,5 +66,7 @@ during_race (lap < n_laps)
 end_race
 
 display("Total time was " concat time_total)
+
+end_trackday
 ```
 
