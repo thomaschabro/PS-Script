@@ -66,29 +66,44 @@ extern int yydebug;
     CONCAT = 267,                  /* CONCAT  */
     THEN = 268,                    /* THEN  */
     IS = 269,                      /* IS  */
-    LESS_THAN = 270,               /* LESS_THAN  */
-    GREATER_THAN = 271,            /* GREATER_THAN  */
-    LESS_THAN_EQUAL = 272,         /* LESS_THAN_EQUAL  */
-    GREATER_THAN_EQUAL = 273,      /* GREATER_THAN_EQUAL  */
-    EQUAL = 274,                   /* EQUAL  */
-    NOT_EQUAL = 275,               /* NOT_EQUAL  */
-    LPAREN = 276,                  /* LPAREN  */
-    RPAREN = 277,                  /* RPAREN  */
-    COLON = 278,                   /* COLON  */
-    PLUS = 279,                    /* PLUS  */
-    MINUS = 280,                   /* MINUS  */
-    TIMES = 281,                   /* TIMES  */
-    DIVIDE = 282,                  /* DIVIDE  */
-    PLUS_EQUAL = 283,              /* PLUS_EQUAL  */
-    MINUS_EQUAL = 284,             /* MINUS_EQUAL  */
-    NEWLINE = 285                  /* NEWLINE  */
+    TRACKDAY = 270,                /* TRACKDAY  */
+    END_TRACKDAY = 271,            /* END_TRACKDAY  */
+    IDENTIFIER = 272,              /* IDENTIFIER  */
+    STRING = 273,                  /* STRING  */
+    NUMBER = 274,                  /* NUMBER  */
+    LESS_THAN = 275,               /* LESS_THAN  */
+    GREATER_THAN = 276,            /* GREATER_THAN  */
+    LESS_THAN_EQUAL = 277,         /* LESS_THAN_EQUAL  */
+    GREATER_THAN_EQUAL = 278,      /* GREATER_THAN_EQUAL  */
+    EQUAL = 279,                   /* EQUAL  */
+    NOT_EQUAL = 280,               /* NOT_EQUAL  */
+    LPAREN = 281,                  /* LPAREN  */
+    RPAREN = 282,                  /* RPAREN  */
+    COLON = 283,                   /* COLON  */
+    PLUS = 284,                    /* PLUS  */
+    MINUS = 285,                   /* MINUS  */
+    TIMES = 286,                   /* TIMES  */
+    DIVIDE = 287,                  /* DIVIDE  */
+    PLUS_EQUAL = 288,              /* PLUS_EQUAL  */
+    MINUS_EQUAL = 289,             /* MINUS_EQUAL  */
+    NEWLINE = 290                  /* NEWLINE  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef int YYSTYPE;
+union YYSTYPE
+{
+#line 8 "bison.y"
+
+    char* str;
+    int num;
+
+#line 104 "bison.tab.h"
+
+};
+typedef union YYSTYPE YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif

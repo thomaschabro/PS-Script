@@ -1,0 +1,21 @@
+track_day
+
+setup track_size is 500
+setup n_laps is 20
+
+setup lap
+lap is 0
+
+setup car_max_vel is i30
+setup car_lap_acceleration is 20
+
+setup vel is 0
+setup time_lap is 0
+setup time_total is 0
+
+during_race (lap < n_laps)
+	lap next
+end_race
+
+
+end_trackday

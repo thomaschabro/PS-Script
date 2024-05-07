@@ -5,23 +5,41 @@ extern FILE *yyin;
 void yyerror(const char *);
 %}
 
-%token SETUP NEXT DISPLAY DURING_RACE VERIFY OTHER END_RACE END_VEF END_OTHER CONCAT THEN IS
-%token LESS_THAN GREATER_THAN LESS_THAN_EQUAL GREATER_THAN_EQUAL EQUAL NOT_EQUAL LPAREN RPAREN COLON PLUS MINUS TIMES DIVIDE PLUS_EQUAL MINUS_EQUAL  NEWLINE
+%union {
+    char* str;
+    int num;
+}
+ 
+%token SETUP NEXT DISPLAY DURING_RACE VERIFY OTHER END_RACE END_VEF END_OTHER CONCAT THEN IS TRACKDAY END_TRACKDAY IDENTIFIER STRING
+%token <num> NUMBER
+%token LESS_THAN GREATER_THAN LESS_THAN_EQUAL GREATER_THAN_EQUAL EQUAL NOT_EQUAL LPAREN RPAREN COLON PLUS MINUS TIMES DIVIDE PLUS_EQUAL MINUS_EQUAL NEWLINE
+
+%type <num> expression
 
 %%
-block: '{' statement '}'
+
+block: TRACKDAY NEWLINE statements END_TRACKDAY
         ;
 
-statement: '(' declaration | assignment | display | during | vef ')' NEWLINE
+statements: 
+        | statements statement
+
+statement: declaration NEWLINE | assignment NEWLINE | display NEWLINE | during NEWLINE | vef NEWLINE | NEWLINE
         ;
 
-declaration: SETUP identifier '[' set_opt ']'
+declaration: SETUP IDENTIFIER set_opt
         ;
 
-assignment: identifier '(' set_opt | increment | plus_opt | minus_opt ')'
+assignment: IDENTIFIER ass_aux
         ;
 
-set_opt: IS expression
+ass_aux: define | increment | plus_opt | minus_opt
+
+set_opt: 
+        | define
+        ;
+
+define: IS expression
         ;
 
 increment: NEXT
@@ -33,43 +51,50 @@ plus_opt: PLUS_EQUAL expression
 minus_opt: MINUS_EQUAL expression
         ;
 
-display: DISPLAY LPAREN '(' string | expression ')' '{' CONCAT '(' string | expression ')' '}' RPAREN 
+display: DISPLAY LPAREN str_exp concat_loop RPAREN 
+        ;
+
+str_exp: STRING | expression
+        ;
+
+concat_loop: 
+        | CONCAT str_exp concat_loop
         ;
 
 during: DURING_RACE LPAREN expression comparator expression RPAREN NEWLINE block END_RACE
         ;
 
-vef: VERIFY LPAREN expression comparator expression RPAREN THEN COLON NEWLINE block END_VEF '[' other_opt ']'
+vef: VERIFY LPAREN expression comparator expression RPAREN THEN COLON NEWLINE block END_VEF other_opt
         ;   
 
-other_opt: OTHER COLON NEWLINE block END_OTHER
+other_opt:
+        | OTHER COLON NEWLINE block END_OTHER
         ;
 
-expression: term '{' '(' PLUS | MINUS ')' term '}' 
+expression: term exp_aux
         ;
 
-term : factor '{' '(' TIMES | DIVIDE ')' factor '}' 
+exp_aux: 
+        | plus_minus term exp_aux
         ;
 
-factor: '(' '(' PLUS | MINUS ')' factor ')' | number | identifier | LPAREN expression RPAREN
+plus_minus: PLUS | MINUS
         ;
 
-identifier: letter { letter | digit | '_'}
+term : factor term_aux
         ;
 
-number: digit '{' digit '}' 
+term_aux:
+        | times_div factor term_aux
         ;
 
-letter: '(' 'a' | 'b' | 'c' | 'd' | 'e' | 'f' | 'g' | 'h' | 'i' | 'j' | 'k' | 'l' | 'm' | 'n' | 'o' | 'p' | 'q' | 'r' | 's' | 't' | 'u' | 'v' | 'w' | 'x' | 'y' | 'z' | 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H' | 'I' | 'J' | 'K' | 'L' | 'M' | 'N' | 'O' | 'P' | 'Q' | 'R' | 'S' | 'T' | 'U' | 'V' | 'W' | 'X' | 'Y' | 'Z' ')'
+times_div: TIMES | DIVIDE
         ;
 
-digit: '(' '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' ')'
+factor: PLUS factor | MINUS factor | NUMBER | IDENTIFIER | LPAREN expression RPAREN
         ;
 
 comparator: LESS_THAN | GREATER_THAN | LESS_THAN_EQUAL | GREATER_THAN_EQUAL | EQUAL | NOT_EQUAL
-        ;
-
-string: '"' { letter | digit | ' ' | colon | MINUS | PLUS | '!' | '.' } '"'
         ;
 
 %%
