@@ -10,7 +10,7 @@ void yyerror(const char *);
     int num;
 }
  
-%token SETUP NEXT DISPLAY DURING_RACE VERIFY OTHER END_RACE END_VEF END_OTHER CONCAT THEN IS TRACKDAY END_TRACKDAY IDENTIFIER STRING
+%token SETUP NEXT DISPLAY DURING_RACE VERIFY OTHER END_RACE END_VEF END_OTHER CONCAT THEN IS TRACKDAY END_TRACKDAY IDENTIFIER STRING INSERT
 %token <num> NUMBER
 %token LESS_THAN GREATER_THAN LESS_THAN_EQUAL GREATER_THAN_EQUAL EQUAL NOT_EQUAL LPAREN RPAREN COLON PLUS MINUS TIMES DIVIDE PLUS_EQUAL MINUS_EQUAL NEWLINE
 
@@ -39,7 +39,13 @@ set_opt:
         | define
         ;
 
-define: IS expression
+define: IS define_aux
+        ;
+
+define_aux: expression | insert_opt
+        ;
+
+insert_opt: INSERT LPAREN RPAREN
         ;
 
 increment: NEXT
@@ -61,14 +67,14 @@ concat_loop:
         | CONCAT str_exp concat_loop
         ;
 
-during: DURING_RACE LPAREN expression comparator expression RPAREN NEWLINE block END_RACE
+during: DURING_RACE LPAREN expression comparator expression RPAREN NEWLINE statements END_RACE
         ;
 
-vef: VERIFY LPAREN expression comparator expression RPAREN THEN COLON NEWLINE block END_VEF other_opt
+vef: VERIFY LPAREN expression comparator expression RPAREN THEN COLON NEWLINE statements END_VEF other_opt
         ;   
 
 other_opt:
-        | OTHER COLON NEWLINE block END_OTHER
+        | NEWLINE OTHER COLON NEWLINE statements END_OTHER
         ;
 
 expression: term exp_aux

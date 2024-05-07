@@ -70,23 +70,24 @@ extern int yydebug;
     END_TRACKDAY = 271,            /* END_TRACKDAY  */
     IDENTIFIER = 272,              /* IDENTIFIER  */
     STRING = 273,                  /* STRING  */
-    NUMBER = 274,                  /* NUMBER  */
-    LESS_THAN = 275,               /* LESS_THAN  */
-    GREATER_THAN = 276,            /* GREATER_THAN  */
-    LESS_THAN_EQUAL = 277,         /* LESS_THAN_EQUAL  */
-    GREATER_THAN_EQUAL = 278,      /* GREATER_THAN_EQUAL  */
-    EQUAL = 279,                   /* EQUAL  */
-    NOT_EQUAL = 280,               /* NOT_EQUAL  */
-    LPAREN = 281,                  /* LPAREN  */
-    RPAREN = 282,                  /* RPAREN  */
-    COLON = 283,                   /* COLON  */
-    PLUS = 284,                    /* PLUS  */
-    MINUS = 285,                   /* MINUS  */
-    TIMES = 286,                   /* TIMES  */
-    DIVIDE = 287,                  /* DIVIDE  */
-    PLUS_EQUAL = 288,              /* PLUS_EQUAL  */
-    MINUS_EQUAL = 289,             /* MINUS_EQUAL  */
-    NEWLINE = 290                  /* NEWLINE  */
+    INSERT = 274,                  /* INSERT  */
+    NUMBER = 275,                  /* NUMBER  */
+    LESS_THAN = 276,               /* LESS_THAN  */
+    GREATER_THAN = 277,            /* GREATER_THAN  */
+    LESS_THAN_EQUAL = 278,         /* LESS_THAN_EQUAL  */
+    GREATER_THAN_EQUAL = 279,      /* GREATER_THAN_EQUAL  */
+    EQUAL = 280,                   /* EQUAL  */
+    NOT_EQUAL = 281,               /* NOT_EQUAL  */
+    LPAREN = 282,                  /* LPAREN  */
+    RPAREN = 283,                  /* RPAREN  */
+    COLON = 284,                   /* COLON  */
+    PLUS = 285,                    /* PLUS  */
+    MINUS = 286,                   /* MINUS  */
+    TIMES = 287,                   /* TIMES  */
+    DIVIDE = 288,                  /* DIVIDE  */
+    PLUS_EQUAL = 289,              /* PLUS_EQUAL  */
+    MINUS_EQUAL = 290,             /* MINUS_EQUAL  */
+    NEWLINE = 291                  /* NEWLINE  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -100,7 +101,7 @@ union YYSTYPE
     char* str;
     int num;
 
-#line 104 "bison.tab.h"
+#line 105 "bison.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

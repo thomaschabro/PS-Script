@@ -6,8 +6,8 @@ setup n_laps is 20
 setup lap
 lap is 0
 
-setup car_max_vel is i30
-setup car_lap_acceleration is 20
+setup car_max_vel is insert()
+setup car_lap_acceleration is insert()
 
 setup vel is 0
 setup time_lap is 0
@@ -15,7 +15,18 @@ setup time_total is 0
 
 during_race (lap < n_laps)
 	lap next
+	
+	verify (vel == car_max_vel) then:
+		display("Car in max speed")
+	end_vef
+	other:
+		vel plus car_lap_acceleration
+	end_other
+
+	time_lap is track_size / vel
+	time_total plus time_lap
 end_race
 
+display("Total time was " concat time_total)
 
 end_trackday
