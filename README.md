@@ -1,7 +1,9 @@
 # PS-Script
-PSS (Pit Stop Script) é uma linguagem de programação voltada para o meio automobilístico. Nela, engenheiros de equipes da F1 podem inserir as informações dos carros competidores, para então poder simular uma corrida. 
 
-## EBNF 
+PSS (Pit Stop Script) é uma linguagem de programação voltada para o meio automobilístico. Nela, engenheiros de equipes da F1 podem inserir as informações dos carros competidores, para então poder simular uma corrida.
+
+## EBNF
+
 ```
 BLOCK = "track_day", { STATEMENT }, "end_trackday";
 STATEMENT = ( "λ" | DECLARATION | ASSIGNMENT | DISPLAY | DURING_RACE | VERIFY ), "\n";
@@ -20,7 +22,7 @@ DISPLAY = "display", "(", ( STRING | EXPRESSION ), {"concat", ( STRING | EXPRESS
 
 DURING_RACE = "during_race", "(", EXPRESSION, COMPARATOR, EXPRESSION, ")", "\n", { STATEMENT }, "end_race";
 
-VERIFY = "verify", "(", EXPRESSION, COMPARATOR, EXPRESSION, ")", "then", ":", "\n", { STATEMENT }, "end_vef", [OTHER];
+VERIFY = "verify", "(", EXPRESSION, COMPARATOR, EXPRESSION, ")", "then", ":", "\n", { STATEMENT }, [OTHER],"end_vef";
 
 OTHER = "other", ":", "\n", { STATEMENT }, "end_other";
 
@@ -34,7 +36,9 @@ DIGIT = ( "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "0" );
 COMPARATOR = ( "<" | ">" | "<=" | ">=" | "==" | "!=" );
 STRING = '"' { "λ" | LETTER | DIGIT } '"'
 ```
+
 ## Código de exemplo
+
 ```
 track_day
 
@@ -53,13 +57,12 @@ setup time_total is 0
 
 during_race (lap < n_laps)
 	lap next
-	
+
 	verify (vel == car_max_vel) then:
 		display("Car in max speed")
-	end_vef
 	other:
 		vel plus car_lap_acceleration
-	end_other
+	end_vef
 
 	time_lap is track_size / vel
 	time_total plus time_lap
@@ -69,4 +72,3 @@ display("Total time was " concat time_total)
 
 end_trackday
 ```
-
