@@ -22,7 +22,7 @@ DISPLAY = "display", "(", ( STRING | EXPRESSION ), {"concat", ( STRING | EXPRESS
 
 DURING_RACE = "during_race", "(", EXPRESSION, COMPARATOR, EXPRESSION, ")", "\n", { STATEMENT }, "end_race";
 
-VERIFY = "verify", "(", EXPRESSION, COMPARATOR, EXPRESSION, ")", "then", ":", "\n", { STATEMENT }, [OTHER],"end_vef";
+VERIFY = "verify", "(", EXPRESSION, COMPARATOR, EXPRESSION, ")", "then", ":", "\n", { STATEMENT }, "end_vef", [OTHER];
 
 OTHER = "other", ":", "\n", { STATEMENT }, "end_other";
 
@@ -60,9 +60,10 @@ during_race (lap < n_laps)
 
 	verify (vel == car_max_vel) then:
 		display("Car in max speed")
+	end_vef
 	other:
 		vel plus car_lap_acceleration
-	end_vef
+	end_other
 
 	time_lap is track_size / vel
 	time_total plus time_lap
