@@ -592,6 +592,13 @@ class Parser:
             else:
                 sys.stderr.write("Erro de sintaxe. Erro após LOCAL. (14)")
                 sys.exit(1)
+        elif tok.next.type == "END_TRACKDAY":
+            tok.selectNext()
+            if tok.next.type != "NL":
+                sys.stderr.write("Erro de sintaxe. Nova linha esperada após END_TRACKDAY. (15)")
+                sys.exit(1)
+            tok.selectNext()
+            return NoOp()
         else:
             sys.stderr.write("Erro de sintaxe. '=' esperado. (3)")
             sys.exit(1)
@@ -627,8 +634,21 @@ class Parser:
 
     def parseBlock(tok):
         saida = Block([])
-        while tok.next is not None:
+        if tok.next is None or tok.next.type != "TRACK_DAY":
+            sys.stderr.write("Erro de sintaxe. TRACK_DAY esperado. (1)")
+            sys.exit(1)
+        tok.selectNext()
+        if tok.next.type != "NL":
+            sys.stderr.write("Erro de sintaxe. Nova linha esperada após TRACK_DAY. (1)")
+            sys.exit(1)
+        tok.selectNext()
+        while tok.next.type != "END_TRACKDAY":
             saida.children.append(Parser.parseStatement(tok))
+        tok.selectNext()
+        if tok.next.type != "NL":
+            sys.stderr.write("Erro de sintaxe. Nova linha esperada após END_TRACKDAY. (1)")
+            sys.exit(1)
+        tok.selectNext()
         return saida
 
     def run(code):
@@ -639,8 +659,9 @@ class Parser:
         st = SymbolTable()
         ft = SymbolTable()
         resultado = ast.Evaluate(st, ft)
+        # Verifica se não há código após o END_TRACKDAY
         if tokenizer.next is not None:
-            sys.stderr.write("Erro de sintaxe. EOF esperado. (2)")
+            sys.stderr.write("Código após END_TRACKDAY")
             sys.exit(1)
         else:
             return resultado
