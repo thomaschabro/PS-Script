@@ -9,21 +9,24 @@ lap is 0
 setup car_max_vel is insert()
 setup car_lap_acceleration is insert()
 
-setup vel is 0
+setup vel is 1
 setup time_lap is 0
 setup time_total is 0
 
 during_race (lap < n_laps)
+    display("Lap " concat lap concat "/" concat n_laps)
 	lap next
 
-	verify (vel == car_max_vel) then:
+	verify (vel >= car_max_vel) then:
 		display("Car in max speed")
+		display("Current speed is " concat vel)
 	end_vef
 	other:
 		vel plus car_lap_acceleration
 	end_other
 
 	time_lap is track_size / vel
+    display("Lap time was " concat time_lap concat " seconds")
 	time_total plus time_lap
 end_race
 

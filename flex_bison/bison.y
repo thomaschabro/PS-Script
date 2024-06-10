@@ -9,7 +9,7 @@ void yyerror(const char *);
     char* str;
     int num;
 }
- 
+
 %token SETUP NEXT DISPLAY DURING_RACE VERIFY OTHER END_RACE END_VEF END_OTHER CONCAT THEN IS TRACKDAY END_TRACKDAY IDENTIFIER STRING INSERT
 %token <num> NUMBER
 %token LESS_THAN GREATER_THAN LESS_THAN_EQUAL GREATER_THAN_EQUAL EQUAL NOT_EQUAL LPAREN RPAREN COLON PLUS MINUS TIMES DIVIDE PLUS_EQUAL MINUS_EQUAL NEWLINE
@@ -21,7 +21,7 @@ void yyerror(const char *);
 block: TRACKDAY NEWLINE statements END_TRACKDAY
         ;
 
-statements: 
+statements:
         | statements statement
 
 statement: declaration NEWLINE | assignment NEWLINE | display NEWLINE | during NEWLINE | vef NEWLINE | NEWLINE
@@ -35,7 +35,7 @@ assignment: IDENTIFIER ass_aux
 
 ass_aux: define | increment | plus_opt | minus_opt
 
-set_opt: 
+set_opt:
         | define
         ;
 
@@ -57,13 +57,13 @@ plus_opt: PLUS_EQUAL expression
 minus_opt: MINUS_EQUAL expression
         ;
 
-display: DISPLAY LPAREN str_exp concat_loop RPAREN 
+display: DISPLAY LPAREN str_exp concat_loop RPAREN
         ;
 
 str_exp: STRING | expression
         ;
 
-concat_loop: 
+concat_loop:
         | CONCAT str_exp concat_loop
         ;
 
@@ -71,7 +71,7 @@ during: DURING_RACE LPAREN expression comparator expression RPAREN NEWLINE state
         ;
 
 vef: VERIFY LPAREN expression comparator expression RPAREN THEN COLON NEWLINE statements END_VEF other_opt
-        ;   
+        ;
 
 other_opt:
         | NEWLINE OTHER COLON NEWLINE statements END_OTHER
@@ -80,7 +80,7 @@ other_opt:
 expression: term exp_aux
         ;
 
-exp_aux: 
+exp_aux:
         | plus_minus term exp_aux
         ;
 
