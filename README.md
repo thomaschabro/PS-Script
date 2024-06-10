@@ -73,3 +73,7 @@ display("Total time was " concat time_total)
 
 end_trackday
 ```
+
+### Apresentação
+
+Link para a apresentação: [Clique aqui](https://docs.google.com/presentation/d/1VgbbVcq-LaROyrkPK7gqxeboMqaPh3YFs6ArR_GX1Yw/edit?usp=sharing)
